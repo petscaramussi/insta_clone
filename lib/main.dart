@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:insta_clone/responsive/mobile_screen_layout.dart';
 import 'package:insta_clone/responsive/responsive_layout_screen.dart';
 import 'package:insta_clone/responsive/web_screen_layout.dart';
+import 'package:insta_clone/screens/login_screen.dart';
 import 'package:insta_clone/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,12 +22,10 @@ void main() async{
           storageBucket: 'insta-clone-16e81.appspot.com',
         )
       );
-      runApp(const MyApp());
     } else {
       await Firebase.initializeApp();
-      runApp(const MyApp());
     }
-
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,7 +39,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor
       ),
-      home: const ResponsiveLayout(mobileScreenLayout: MobileScreenLayout(), webScreenLayout: WebScreenLayout(),)
+      // home: const ResponsiveLayout(mobileScreenLayout: MobileScreenLayout(), webScreenLayout: WebScreenLayout(),)
+      home: LoginScreen()
     );
   }
 
