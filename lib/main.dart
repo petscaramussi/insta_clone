@@ -24,7 +24,15 @@ void main() async{
         )
       );
     } else {
-      await Firebase.initializeApp();
+      await Firebase.initializeApp(
+        options: const FirebaseOptions(
+          apiKey: 'AIzaSyASgD8Qi40wZZ3i-oxuJ6Rs412bu_GBbs0',
+          appId: '1:680072344368:android:9f41a8d648208c77bbcef5',
+          messagingSenderId: '680072344368',
+          projectId: 'insta-clone-16e81',
+          storageBucket: 'insta-clone-16e81.appspot.com',
+        )
+      );
     }
   runApp(const MyApp());
 }
