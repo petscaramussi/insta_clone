@@ -3,6 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:insta_clone/responsive/mobile_screen_layout.dart';
+import 'package:insta_clone/responsive/responsive_layout_screen.dart';
+import 'package:insta_clone/responsive/web_screen_layout.dart';
+import 'package:insta_clone/screens/login_screen.dart';
 import 'package:insta_clone/utils/colors.dart';
 import 'package:insta_clone/utils/utils.dart';
 import 'package:insta_clone/widgets/text_field_input.dart';
@@ -32,11 +36,11 @@ class _SignupScreenState extends State<SignupScreen> {
     _usernameController.dispose();
   }
 
-  void selectImage() async{
-   Uint8List im = await pickImage(ImageSource.gallery);
-   setState(() {
-     _image = im;
-   });
+  void selectImage() async {
+    Uint8List im = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = im;
+    });
   }
 
   void signUpUser() async {
@@ -48,16 +52,28 @@ class _SignupScreenState extends State<SignupScreen> {
         password: _passwordController.text,
         username: _usernameController.text,
         bio: _bioController.text,
-        file: _image!
-    );
+        file: _image!);
     setState(() {
       _isLoading = false;
     });
 
-    if(res != 'success'){
+    if (res != 'success') {
       showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
     }
+  }
 
+  void navigateToLogin() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -84,15 +100,15 @@ class _SignupScreenState extends State<SignupScreen> {
                 Stack(
                   children: <Widget>[
                     _image != null
-                      ? CircleAvatar(
-                      radius: 64,
-                      backgroundImage: MemoryImage(_image!),
-                    )
-                    : const CircleAvatar(
-                      radius: 64,
-                      backgroundImage: NetworkImage(
-                          'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'),
-                    ),
+                        ? CircleAvatar(
+                            radius: 64,
+                            backgroundImage: MemoryImage(_image!),
+                          )
+                        : const CircleAvatar(
+                            radius: 64,
+                            backgroundImage: NetworkImage(
+                                'https://t3.ftcdn.net/jpg/00/64/67/80/360_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg'),
+                          ),
                     Positioned(
                       bottom: -10,
                       left: 80,
@@ -158,9 +174,13 @@ class _SignupScreenState extends State<SignupScreen> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(4))),
                         color: blueColor),
-                    child: _isLoading ? Center(child: CircularProgressIndicator(
-                      color: primaryColor,
-                    ),) : const Text('Sign up'),
+                    child: _isLoading
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                            ),
+                          )
+                        : const Text('Sign up'),
                   ),
                 ),
 
@@ -181,15 +201,15 @@ class _SignupScreenState extends State<SignupScreen> {
                       onTap: () {},
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: const Text("Don't have an account? "),
+                        child: const Text("Already have an account? "),
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: navigateToLogin,
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: const Text(
-                          "Sing up.",
+                          "Log in.",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
