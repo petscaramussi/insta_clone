@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:insta_clone/resources/firestore_methods.dart';
 import 'package:insta_clone/utils/colors.dart';
 import 'package:insta_clone/widgets/like_animation.dart';
 import 'package:intl/intl.dart';
@@ -91,7 +92,9 @@ class _PostCardState extends State<PostCard> {
 
           // IMAGE SECTION
           GestureDetector(
-            onDoubleTap: () {
+            onDoubleTap: () async {
+              await FirestoreMethods().likePost(
+                  widget.snap['postId'], user.uid, widget.snap['likes']);
               setState(() {
                 isLikeAnimating = true;
               });
@@ -137,12 +140,18 @@ class _PostCardState extends State<PostCard> {
               isAnimating: widget.snap['likes'].contains(user.uid),
               smallLikes: true,
               child: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                ),
-              ),
+                  onPressed: () async {
+                    await FirestoreMethods().likePost(
+                        widget.snap['postId'], user.uid, widget.snap['likes']);
+                  },
+                  icon: widget.snap['likes'].contains(user.uid)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        )
+                      : const Icon(
+                          Icons.favorite_border,
+                        )),
             ),
             IconButton(
               onPressed: () {},
@@ -214,8 +223,7 @@ class _PostCardState extends State<PostCard> {
                     padding: const EdgeInsets.symmetric(vertical: 4),
                     child: const Text(
                       'View all 200 comments',
-                      style:
-                          TextStyle(fontSize: 16, color: secondaryColor),
+                      style: TextStyle(fontSize: 16, color: secondaryColor),
                     ),
                   ),
                 ),
