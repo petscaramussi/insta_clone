@@ -17,7 +17,7 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-      apiKey: 'AIzaSyAZ5EGt_vaWHkusW0WDgV7qDM9fYK4ggAg',
+      apiKey: '********************************',
       appId: '1:680072344368:web:ed5bc871e101c5ebbbcef5',
       messagingSenderId: '680072344368',
       projectId: 'insta-clone-16e81',
@@ -27,7 +27,7 @@ void main() async {
   } else {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-      apiKey: 'AIzaSyASgD8Qi40wZZ3i-oxuJ6Rs412bu_GBbs0',
+      apiKey: '***********************************',
       appId: '1:680072344368:android:9f41a8d648208c77bbcef5',
       messagingSenderId: '680072344368',
       projectId: 'insta-clone-16e81',
